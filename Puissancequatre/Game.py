@@ -2,7 +2,13 @@ import numpy as np
 class Game:
     def __init__(self, player1, player2):
         """
-        Initialise la classe
+        IN : Pseudo du player1 puis pseudo du player2
+
+        Initialise le jeu,
+        crée la matrice,
+        crée un index (qui passe de 0 à 1) en fonction du tour du joueur,
+        crée une variable booléenne "égalité" par défaut sur false,
+        crée une variable booléenne "jeufini" par défaut sur false.
         """
         self.player1 = player1
         self.player2 = player2
@@ -15,7 +21,7 @@ class Game:
                         [0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0],
                         [0, 0, 0, 0, 0, 0, 0]])
-        print("Game start !")
+        #print("Game start !")
         # self.displayTab()
         # self.startGame()
 
@@ -32,22 +38,23 @@ class Game:
             self.verif()
             self.displayTab()
             self.indexActualPlayer = (self.indexActualPlayer + 1) % 2
-        if self.indexActualPlayer == 1 :
-            print("The winner is", self.player1)
-        else :
-            print("The winner is", self.player2)
+        #if self.indexActualPlayer == 1 :
+            #print("The winner is", self.player1)
+        #else :
+            #print("The winner is", self.player2)
 
     def turn(self):
         """
         IN : self
 
-        Continue la partie avec une itération qui définit le tour puis une boucle qui permet de choisir la colonne
-        où jouer
+        Joue le tour du joueur correspondant,
+        demmande la colonne a joué.
+
         """
-        if self.indexActualPlayer == 0:
-            print("Player ", self.player1, " it's your turn !")
-        else:
-            print("Player ", self.player2, " it's your turn !")
+        #if self.indexActualPlayer == 0:
+            #print("Player ", self.player1, " it's your turn !")
+        #else:
+            #print("Player ", self.player2, " it's your turn !")
         while True:
             column = int(input("Please enter the column you want to play. (Between 1 and 7)"))
             if column >= 1 and column <= 7 and not self.isFull(column):
@@ -57,9 +64,9 @@ class Game:
     def isFull(self, column):
         """
         IN : self,  column
-        OUT : Booléan pour colonne pleine
+        OUT : Booléan si colonne pleine ou non
 
-        Renvoit un True ou False pour savoir si la colonne est pleine ou non
+        Renvoit un True ou False pour savoir si la colonne est pleine ou non.
         """
         return(self.tab[0, column-1] !=0)
 
@@ -69,7 +76,7 @@ class Game:
 
         Joue le pion avec de la "gravité", en utilisant une boucle qui explore la colonne jusqu'à trouver un pion existant
         pour avoir la coordonée exacte à utilisé, si il ne trouve pas de pion c'est que la colonne est vide, le valeur
-        par défaut est donc 5
+        par défaut est donc 5.
         """
         temp = 5
         for i in range(6):
@@ -80,6 +87,10 @@ class Game:
 
     def verif(self):
         """
+        IN : self
+
+        OUT : Booléen si oui ou non le jeu est terminé
+
         Vérifie si le jeu est terminé.
         """
         for i in range(self.tab.shape[0]):
@@ -115,10 +126,9 @@ class Game:
 
     def displayTab(self):
         """
-        IN :
-        OUT :
+        IN : self
 
-        Initialise la class
+        Affiche la matrice dans le terminal.
         """
         print(self.tab)
 

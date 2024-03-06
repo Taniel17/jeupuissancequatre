@@ -4,7 +4,13 @@ import requests
 class GameOnline:
     def __init__(self, player):
         """
-        Initialise la classe
+        IN : Pseudo du player
+
+        Initialise le jeu,
+        crée la matrice,
+        crée un index (qui passe de 0 à 1) en fonction du tour du joueur,
+        crée une variable booléenne "égalité" par défaut sur false,
+        crée une variable booléenne "jeufini" par défaut sur false.
         """
         self.player = player
         self.indexActualPlayer = 0
@@ -27,6 +33,20 @@ class GameOnline:
         self.joint()
 
     def joint(self):
+        """
+         IN: self
+
+         Cette méthode est utilisée pour rejoindre une partie en tant que joueur.
+         Elle va faire une requête GET pour vérifier la liste des joueur sur le serveur.
+
+         Puis vérifie si il n'y a aucun déja enregistré sur le serveur :
+         si non, indice = 1
+         si oui, indice = 2
+
+         Ensuite Symbol (1 ou 2) et nom (nom du joueur) sont les données qui vont être envoyé au serveur.
+
+         Enfin, elle va faire une requête POST pour envoyer les infos du joueur au serveur.
+        """
         response = requests.request("GET", self.url + "/Players", headers=self.headers).json()["results"]
         if len(response) == 0:
             self.indexActualPlayer = 1
@@ -41,10 +61,10 @@ class GameOnline:
 
     def isFull(self, column):
         """
-        IN : self,  column
-        OUT : Booléan pour colonne pleine
+        IN : self,  column (La colonne a vérifié)
+        OUT : Booléan si la colonne est pleine ou non
 
-        Renvoit un True ou False pour savoir si la colonne est pleine ou non
+        Renvoit un True ou False pour savoir si la colonne est pleine ou non.
         """
         return(self.tab[0, column-1] !=0)
 
@@ -54,7 +74,7 @@ class GameOnline:
 
         Joue le pion avec de la "gravité", en utilisant une boucle qui explore la colonne jusqu'à trouver un pion existant
         pour avoir la coordonée exacte à utilisé, si il ne trouve pas de pion c'est que la colonne est vide, le valeur
-        par défaut est donc 5
+        par défaut est donc 5.
         """
         temp = 5
         for i in range(6):
@@ -65,6 +85,10 @@ class GameOnline:
 
     def verif(self):
         """
+        IN : self
+
+        OUT : Booléen si oui ou non le jeu est terminé
+
         Vérifie si le jeu est terminé.
         """
         for i in range(self.tab.shape[0]):
@@ -100,10 +124,9 @@ class GameOnline:
 
     def displayTab(self):
         """
-        IN :
-        OUT :
+        IN : self
 
-        Initialise la class
+        Affiche la matrice dans le terminal.
         """
         print(self.tab)
 

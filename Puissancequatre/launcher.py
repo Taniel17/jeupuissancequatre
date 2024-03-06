@@ -3,8 +3,15 @@ from tkinter import messagebox
 from PIL import Image, ImageTk
 import gui
 import guiIA
-
+#Généré à 50% par chatgpt par manque de temmps.
 def start_game():
+    """
+
+    Récupère toutes les informations du formulaire,
+    si valable,
+    Démarre la partie avec les arguments de l'utilisateur (Type de jeu, pseudo(s)).
+
+    """
     game_type = game_type_var.get()
     player1 = player1_name_var.get()
     player2 = player2_name_var.get()
@@ -23,7 +30,13 @@ def start_game():
         root.destroy()
         guiIA.start(player1, ia_level)
 
-def toggle_player2_frame():
+def toggle_player2():
+    """
+
+    Affiche l'élement de formulaire où entrer le pseudo du player2 si il n'est pas déjà visible
+    et si il est déjà visible, le retire.
+
+    """
     if game_type_var.get() == "local":
         player2_frame.grid(row=3, column=0, columnspan=2, pady=10, padx=10, sticky="ew")
         ia_frame.grid_remove()
@@ -32,6 +45,12 @@ def toggle_player2_frame():
         player2_frame.grid_remove()
 
 def toggle_game_mode():
+    """
+
+    Affiche l'élement de formulaire ou entrer le pseudo du player2 si il n'est pas déjà visible
+    et si il est déjà visible, le retire.
+
+    """
     if game_type_var.get() == "local":
         local_radio.config(image=checked_icon, bg="#636363")
         ia_radio.config(image=unchecked_icon, bg="#636363")
@@ -42,6 +61,13 @@ def toggle_game_mode():
         local_radio.config(image=unchecked_icon, bg="#636363")
         ia_frame.grid(row=3, column=0, columnspan=2, pady=10, padx=10, sticky="ew")
         player2_frame.grid_remove()
+
+"""
+
+    initialise la page tkinter complète,
+    les variables, écritures, images (en les redimensionnant), met par défaut des valeurs au formulaire (IA coché). 
+    
+"""
 
 root = tk.Tk()
 root.geometry("350x500")
@@ -89,7 +115,7 @@ tk.OptionMenu(ia_frame, ia_level_var, *range(1, 4)).pack(side="left")
 start_button = tk.Button(root, text="Commencer la partie", command=start_game, bg="#007ACC", fg="white", font=("Arial", 12, "bold"))
 start_button.grid(row=4, column=0, columnspan=2, pady=10, sticky="ew")
 
-toggle_player2_frame()
+toggle_player2()
 
 root.mainloop()
 
